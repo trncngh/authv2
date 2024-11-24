@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { coverageConfigDefaults, defineConfig } from 'vitest/config'
@@ -9,13 +10,17 @@ export default defineConfig({
     environment: 'jsdom',
     coverage: {
       reporter: ['text', 'lcov', 'html', 'json'],
+      include: ['src/**/*.{test,spec}.{ts,tsx}'],
       exclude: [
         '**/*.config.**',
-        '**/*.stories.{ts,tsx}',
+        '**/*.{stories,validate,zod}.{ts,tsx}',
         '**/app/**/*',
+        '.boilerplates/**',
+        '**/__mock__/**/*',
         ...coverageConfigDefaults.exclude,
       ],
     },
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
   },
   resolve: {
     alias: {
