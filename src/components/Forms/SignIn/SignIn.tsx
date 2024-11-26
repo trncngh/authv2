@@ -4,12 +4,12 @@ import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
 import { startTransition, useActionState } from 'react'
 import { useForm } from 'react-hook-form'
-import { LoginSchema, TLoginSchema } from './Login.zod'
+import { SignInSchema, TSignInSchema } from './SignIn.zod'
 
-type TLoginProps = {
-  loginAction: (
+type TSignInProps = {
+  signInAction: (
     currentState: { success: boolean; error: boolean; message: string },
-    formData: TLoginSchema
+    formData: TSignInSchema
   ) => Promise<{
     success: boolean
     error: boolean
@@ -17,19 +17,19 @@ type TLoginProps = {
   }>
 }
 
-const Login = ({
+const SignIn = ({
   className = '',
-  loginAction,
-}: TLoginProps & { className?: string }) => {
+  signInAction,
+}: TSignInProps & { className?: string }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TLoginSchema>({
-    resolver: zodResolver(LoginSchema),
+  } = useForm<TSignInSchema>({
+    resolver: zodResolver(SignInSchema),
   })
 
-  const [state, formAction, isPending] = useActionState(loginAction, {
+  const [state, formAction, isPending] = useActionState(signInAction, {
     success: false,
     error: false,
     message: '',
@@ -63,7 +63,7 @@ const Login = ({
           errorMessage={errors.password?.message}
         />
         <Button type="submit" disabled={isPending}>
-          Login
+          SignIn
         </Button>
       </div>
       {state.success && <p className="text-green-500">{state.message}</p>}
@@ -71,4 +71,4 @@ const Login = ({
   )
 }
 
-export default Login
+export default SignIn

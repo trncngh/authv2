@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Login from './Login';
+import OauthSignIn from './OAuthSignIn';
 
 const meta = {
-  component: Login,
-} satisfies Meta<typeof Login>;
+  component: OauthSignIn,
+} satisfies Meta<typeof OauthSignIn>;
 
 export default meta;
 
