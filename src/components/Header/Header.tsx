@@ -1,9 +1,17 @@
+import { TSignInSchema } from '@/components/Forms/SignIn/SignIn.zod'
 import Link from 'next/link'
 import OAuthSignIn from '../Forms/OAuthSignIn/OAuthSignIn'
 import SignIn from '../Forms/SignIn/SignIn'
 
 type THeaderProps = {
-  signInAction: (formData: FormData) => void
+  signInAction: (
+    currentState: { success: boolean; error: boolean; message: string },
+    formData: TSignInSchema
+  ) => Promise<{
+    success: boolean
+    error: boolean
+    message: string
+  }>
   gitHubSignIn: () => void
   googleSignIn: () => void
 }

@@ -1,14 +1,23 @@
 import { SignInSchema } from '@/components/Forms/SignIn/SignIn.zod'
 import { createSession } from '@/libs/auth/session'
 import { prisma } from '@/libs/prisma'
+import { PrismaAdapter } from '@auth/prisma-adapter'
 import bcrypt from 'bcrypt'
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import GitHub from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
 
+declare module 'next-auth' {
+  interface User {
+    success?: boolean
+    message?: string
+    error?: boolean // Or a more specific type
+  }
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  //   adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma),
   providers: [
     GitHub,
     Google,
@@ -19,14 +28,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         let user = null
+        console.log(credentials)
         try {
           const validateData = SignInSchema.safeParse({
-            email: credentials.email as string,
-            password: credentials.password as string,
+            email: credentials.email,
+            password: credentials.password,
           })
-          console.log(credentials)
+
           if (!validateData.success) {
-            throw new Error('Invalid data')
+            return {
+              error: true,
+              success: false,
+              message: 'Validation failed',
+              user,
+            }
           }
           user = await prisma.user.findUnique({
             where: {
@@ -38,7 +53,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           })
 
           if (!user || !user.credential) {
-            throw new Error('User not found')
+            return {
+              error: true,
+              success: false,
+              message: 'user not found',
+              user,
+            }
           }
 
           const isPasswordMatch = await bcrypt.compare(
@@ -47,15 +67,36 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           )
 
           if (!isPasswordMatch) {
-            throw new Error('Password not match')
+            return {
+              error: true,
+              success: false,
+              message: 'password not match',
+              user,
+            }
           }
           await createSession(user.id)
-          console.log(user)
-          return user
+          console.log('hehehhe')
+          console.log({
+            error: false,
+            success: true,
+            message: 'login success',
+            user,
+          })
+          return {
+            error: false,
+            success: true,
+            message: 'login success',
+            user,
+          }
         } catch (error) {
           console.error(error)
+          return {
+            error: true,
+            success: false,
+            message: 'An error occurred',
+            user,
+          }
         }
-        return user
       },
     }),
   ],

@@ -1,5 +1,5 @@
 import Header from '@/components/Header/Header'
-import { signIn } from '@/libs/auth/oAuth'
+import { gitHubSignIn, googleSignIn, signInAction } from '@/libs/actions/auth'
 import type { Metadata } from 'next'
 import './globals.css'
 
@@ -13,27 +13,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const googleSignIn = async () => {
-    'use server'
-    await signIn('google')
-  }
-  const gitHubSignIn = async () => {
-    'use server'
-    await signIn('github')
-  }
-
-  const signInAction = async (formData: FormData) => {
-    'use server'
-    await signIn('credentials', formData)
-  }
-
   return (
     <html lang="en">
       <body className={`antialiased`}>
         <Header
+          signInAction={signInAction}
           gitHubSignIn={gitHubSignIn}
           googleSignIn={googleSignIn}
-          signInAction={signInAction}
         />
         {children}
       </body>

@@ -8,7 +8,7 @@ type TSession = {
   expiresAt: Date
 }
 
-const expiresTime = 10_000 * 6 * 5
+const expiresTime = 10_000
 export const createSession = async (userId: string) => {
   const cookieStore = await cookies()
   // const expiresTime = 1000 * 60 * 60 * 24 * 7
@@ -36,6 +36,6 @@ export const decryptSession = async (session: string) => {
     })
     return payload
   } catch (error) {
-    console.error(`Failed to verify session: ${error}`)
+    // console.error(`Failed to verify session: ${error}`)
   }
 }

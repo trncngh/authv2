@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -39,7 +40,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
-    "@eslint/js": "^9.15.0",
+    "@eslint/js": "^10.0.0",
     "@storybook/addon-essentials": "^8.4.0",
     "@storybook/addon-interactions": "^8.4.0",
     "@storybook/addon-links": "^8.4.0",

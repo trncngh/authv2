@@ -14,6 +14,7 @@ type TSignInProps = {
     success: boolean
     error: boolean
     message: string
+    user: any
   }>
 }
 
@@ -33,20 +34,19 @@ const SignIn = ({
     success: false,
     error: false,
     message: '',
+    user: null,
   })
 
   const formSubmit = handleSubmit((formData) => {
     startTransition(() => {
+      console.log(state)
       formAction(formData)
+      console.log(state)
     })
   })
 
   return (
-    <form
-      // action=""
-      onSubmit={formSubmit}
-      className={`${className} `}
-    >
+    <form onSubmit={formSubmit} className={`${className} `}>
       <div className="flex items-center justify-center gap-2">
         <Input
           type="Email"
@@ -56,7 +56,7 @@ const SignIn = ({
           errorMessage={errors.email?.message}
         />
         <Input
-          type="text"
+          type="password"
           label="Password"
           {...register('password')}
           isInvalid={!!errors.password}
@@ -66,7 +66,7 @@ const SignIn = ({
           SignIn
         </Button>
       </div>
-      {state.success && <p className="text-green-500">{state.message}</p>}
+      <p className="text-green-500">{state.message}</p>
     </form>
   )
 }
