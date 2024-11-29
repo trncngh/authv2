@@ -2,7 +2,6 @@ import SignUp from '@/components/Forms/SignUp/SignUp'
 import Users from '@/components/Tables/Users/Users'
 import { deleteUser, getUsers } from '@/libs/actions/user'
 import { signUp } from '@/libs/auth/credential'
-import { signIn } from '@/libs/auth/oAuth'
 import { revalidatePath } from 'next/cache'
 import Image from 'next/image'
 
@@ -12,19 +11,6 @@ export default async function Home() {
     'use server'
     await deleteUser(id)
     revalidatePath('/')
-  }
-
-  // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault()
-  //   const formData = new FormData(event.currentTarget)
-  //   const email = formData.get('email') as string
-  //   const password = formData.get('password') as string
-  //   await signIn('credentials', { email, password })
-  // }
-
-  const credentialsAction = async (formData: FormData) => {
-    'use server'
-    return signIn('credentials', formData)
   }
 
   return (

@@ -1,4 +1,6 @@
 'use client'
+import { TUser } from '@/components/Tables/Users/Users'
+import { TStatusState } from '@/libs/common.type'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
@@ -8,14 +10,9 @@ import { SignInSchema, TSignInSchema } from './SignIn.zod'
 
 type TSignInProps = {
   signInAction: (
-    currentState: { success: boolean; error: boolean; message: string },
+    currentState: TStatusState & { user: TUser | null },
     formData: TSignInSchema
-  ) => Promise<{
-    success: boolean
-    error: boolean
-    message: string
-    user: any
-  }>
+  ) => Promise<TStatusState & { user: TUser | null }>
 }
 
 const SignIn = ({
@@ -31,15 +28,13 @@ const SignIn = ({
   })
 
   const [state, formAction, isPending] = useActionState(signInAction, {
-    success: false,
-    error: false,
+    status: 'idle',
     message: '',
     user: null,
   })
 
   const formSubmit = handleSubmit((formData) => {
     startTransition(() => {
-      console.log(state)
       formAction(formData)
       console.log(state)
     })

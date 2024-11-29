@@ -1,17 +1,15 @@
 import { TSignInSchema } from '@/components/Forms/SignIn/SignIn.zod'
+import { TUser } from '@/components/Tables/Users/Users'
+import { TStatusState } from '@/libs/common.type'
 import Link from 'next/link'
 import OAuthSignIn from '../Forms/OAuthSignIn/OAuthSignIn'
 import SignIn from '../Forms/SignIn/SignIn'
 
 type THeaderProps = {
   signInAction: (
-    currentState: { success: boolean; error: boolean; message: string },
+    currentState: TStatusState & { user: TUser | null },
     formData: TSignInSchema
-  ) => Promise<{
-    success: boolean
-    error: boolean
-    message: string
-  }>
+  ) => Promise<TStatusState & { user: TUser | null }>
   gitHubSignIn: () => void
   googleSignIn: () => void
 }

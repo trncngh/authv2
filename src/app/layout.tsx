@@ -1,5 +1,6 @@
 import Header from '@/components/Header/Header'
-import { gitHubSignIn, googleSignIn, signInAction } from '@/libs/actions/auth'
+import { gitHubSignIn, googleSignIn } from '@/libs/actions/auth'
+import { signIn } from '@/libs/auth/credential'
 import type { Metadata } from 'next'
 import './globals.css'
 
@@ -17,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <Header
-          signInAction={signInAction}
+          signInAction={signIn}
           gitHubSignIn={gitHubSignIn}
           googleSignIn={googleSignIn}
         />

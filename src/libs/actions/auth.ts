@@ -13,12 +13,9 @@ export const signInAction = async (
   currentState: { success: boolean; error: boolean; message: string },
   formData: TSignInSchema
 ) => {
-  const a = await signIn('credentials', {
+  return await signIn('credentials', {
     redirect: false,
     email: formData.email,
     password: formData.password,
   })
-  console.log('a')
-  console.log(a)
-  return a
 }
