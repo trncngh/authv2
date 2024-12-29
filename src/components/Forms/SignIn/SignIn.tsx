@@ -36,7 +36,6 @@ const SignIn = ({
   const formSubmit = handleSubmit((formData) => {
     startTransition(() => {
       formAction(formData)
-      console.log(state)
     })
   })
 

@@ -1,5 +1,3 @@
-import { prisma } from '@/libs/prisma'
-import { PrismaAdapter } from '@auth/prisma-adapter'
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import GitHub from 'next-auth/providers/github'
@@ -15,7 +13,7 @@ declare module 'next-auth' {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   debug: true,
-  adapter: PrismaAdapter(prisma),
+  // adapter: PrismaAdapter(prisma),
   providers: [
     GitHub,
     Google,
@@ -26,7 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         let user = null
-        console.log(credentials)
+        // console.log(credentials)
         return {
           error: true,
           success: false,

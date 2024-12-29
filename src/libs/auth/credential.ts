@@ -8,7 +8,7 @@ import {
   TSignUpSchema,
 } from '@/components/Forms/SignUp/SignUp.zod'
 import { TUser } from '@/components/Tables/Users/Users'
-import { createSession } from '@/libs/auth/session'
+import { createSession, deleteSession } from '@/libs/auth/session'
 import { TStatusState } from '@/libs/common.type'
 import { prisma } from '@/libs/prisma'
 import { saltAndHash } from '@/libs/utils/auth'
@@ -90,8 +90,7 @@ export const signIn = async (
         user: null,
       }
     }
-    await createSession(user.id)
-    console.log(user)
+    await createSession(user.id, user.email, user.role?.name)
     return {
       status: 'success',
       message: 'Login success',
@@ -105,4 +104,9 @@ export const signIn = async (
       user: null,
     }
   }
+}
+
+export const signOut = async () => {
+  await deleteSession()
+  revalidatePath('/')
 }

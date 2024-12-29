@@ -7,15 +7,16 @@ const protectedRoutes = ['/dashboard']
 const publicRoutes = ['/signin', '/register']
 
 export const middleware = async (req: NextRequest) => {
-  const cookieStore = await cookies()
   const path = req.nextUrl.pathname
   const isProtededRoute = protectedRoutes.includes(path)
   const isPublicRoute = publicRoutes.includes(path)
   // decrypt the session cookies and check if the user is authenticated
+  const cookieStore = await cookies()
   const sessionCookie = cookieStore.get('session')?.value ?? ''
 
-  const session = await decryptSession(sessionCookie)
-  // routing
+  const session = sessionCookie
+    ? await decryptSession(sessionCookie)
+    : undefined
 
   // console.log(session)
 

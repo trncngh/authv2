@@ -10,11 +10,28 @@ export const getUsers = async () => {
         id: true,
       },
     })
-
     return users
   } catch (error) {
     prismaError(error, 'Failed to get users')
     return []
+  }
+}
+
+export const getUser = async (userId: string) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        role: true,
+        email: true,
+      },
+    })
+    return user
+  } catch (error) {
+    prismaError(error, 'Failed to get user')
+    return undefined
   }
 }
 

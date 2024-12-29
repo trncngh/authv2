@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import Header from './Header'
+import UserInfo from './UserInfo'
 
 const meta = {
-  component: Header,
-} satisfies Meta<typeof Header>
+  component: UserInfo,
+} satisfies Meta<typeof UserInfo>
 
 export default meta
 
@@ -12,9 +12,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    currentUser: {
-      email: 'abc.com',
-      role: 'admin',
-    },
+    email: 'example@gmail.com',
+    role: 'admin',
+    signOutAction: () => {},
   },
 }
