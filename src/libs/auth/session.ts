@@ -65,5 +65,4 @@ export const getCurrentSession = async () => {
 export const deleteSession = async () => {
   const cookieStore = await cookies()
   cookieStore.delete('session')
-  console.log('Session deleted')
 }

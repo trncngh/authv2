@@ -18,8 +18,6 @@ export const middleware = async (req: NextRequest) => {
     ? await decryptSession(sessionCookie)
     : undefined
 
-  // console.log(session)
-
   if (isProtededRoute && !session?.userId) {
     return NextResponse.redirect(new URL('/signin', req.nextUrl))
   }

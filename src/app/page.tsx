@@ -1,7 +1,7 @@
 import SignUp from '@/components/Forms/SignUp/SignUp'
 import Users from '@/components/Tables/Users/Users'
-import { deleteUser, getUsers } from '@/libs/actions/user'
 import { signUp } from '@/libs/auth/credential'
+import { deleteUser, getUsers } from '@/libs/controllers/user'
 import { revalidatePath } from 'next/cache'
 import Image from 'next/image'
 

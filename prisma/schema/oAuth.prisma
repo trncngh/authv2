@@ -1,0 +1,9 @@
+model OAuthAccount {
+    id                String   @id @unique @default(cuid())
+    provider          String
+    providerAccountId String
+    userId            String
+    user              User     @relation(fields: [userId], references: [id])
+    updateAt          DateTime @updatedAt
+    createdAt         DateTime @default(now())
+}
